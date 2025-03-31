@@ -24,47 +24,23 @@ from array import *
 def tablePurchaseHistory():
     history = open('history.txt', 'r')
     dataSummary = history.readline().strip().split()
-    amountCustomers = dataSummary[0]
-    amountItems = dataSummary[1]
-    amountTransactions = dataSummary[2]
+    amountCustomers, amountItems, amountTransactions = dataSummary[0], dataSummary[1], dataSummary[2]
+    countEntries = 0
     purchaseHistory = np.zeros((int(amountCustomers), int(amountItems)))
-    print(purchaseHistory) # TODO: Test Line
-    for i in range(int(amountTransactions)-1):
+    # print(purchaseHistory)        # TODO: Test Line
+    for i in range(int(amountTransactions)):
         transaction = history.readline().strip().split(' ')
         user, items = transaction[0], transaction[1]
+        if (purchaseHistory[int(user)-1][int(items)-1] == 0):
+            countEntries += 1
         purchaseHistory[int(user)-1][int(items)-1] = 1
-    print(purchaseHistory) # TODO: Test Line
-        
-    
-
-# ----------------------------------------------------------------
-# Process the input in to lists of vectors
-# ----------------------------------------------------------------
-def process_input(text):
-    item_features = []
-    # purchaseHistory = np.zeros
-    # purchaseHistory.shape = (4, 4)
-    for line in text:
-        user, items = line.strip()
-        user, items = items.split(' ')
-
-        print(user + " " + items)
-        # item_features.append(np.fromstring(line, dtype=float, sep=' '))
-    return item_features
+    # print(purchaseHistory)        # TODO: Test Line
+    # print(countEntries)           # TODO: Test Line
+    return countEntries
 
 
-# ----------------------------------------------------------------
-# Write the output to the command line interface.
-# ----------------------------------------------------------------
-def write_text(text):
-    print(text)
-
-
-# ----------------------------------------------------------------
-# Build the customer-item purchase history table
-# ----------------------------------------------------------------
-def build_purchase_history_table(item_features):
-    pass
+def calculateAverageAngle():
+    return 1
 
 
 # ----------------------------------------------------------------
@@ -73,7 +49,10 @@ def build_purchase_history_table(item_features):
 def main():
     # item_features = read_text()
     # item_features = process_input(item_features)
-    tablePurchaseHistory()
+    countPositiveEntries = tablePurchaseHistory()
+    print(f"Positive entries: {countPositiveEntries}")
+    averageAngle = calculateAverageAngle()
+    print(f"Average angle: {averageAngle}")
 
 if __name__ == "__main__":
     main()
