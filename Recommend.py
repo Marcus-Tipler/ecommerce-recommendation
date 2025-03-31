@@ -9,14 +9,6 @@
 import numpy as np
 from array import *
 
-# Declarations of global variables
-
-# Defining a function to calculate the cosine similarity between two vectors
-# def cosine_similarity(vector1, vector2):
-#     dot_product = np.dot(vector1, vector2)
-#     magnitude_vector1 = np.linalg.norm(vector1)
-#     magnitude_vector2 = np.linalg.norm(vector2)
-#     return dot_product / (magnitude_vector1 * magnitude_vector2)
 
 # ----------------------------------------------------------------
 # Creates the Purchase History Table matrix.
