@@ -7,7 +7,9 @@
 
 # Importing necessary libraries
 import numpy as np
+from array import *
 
+# Declarations of global variables
 
 # Defining a function to calculate the cosine similarity between two vectors
 # def cosine_similarity(vector1, vector2):
@@ -17,11 +19,22 @@ import numpy as np
 #     return dot_product / (magnitude_vector1 * magnitude_vector2)
 
 # ----------------------------------------------------------------
-# Read the text file in the current directory.
+# Creates the Purchase History Table matrix.
 # ----------------------------------------------------------------
-def read_text():
-    with open('out.txt', 'r') as file:
-        return file.read().splitlines()
+def tablePurchaseHistory():
+    history = open('history.txt', 'r')
+    dataSummary = history.readline().strip().split()
+    amountCustomers = dataSummary[0]
+    amountItems = dataSummary[1]
+    amountTransactions = dataSummary[2]
+    purchaseHistory = np.zeros((int(amountCustomers), int(amountItems)))
+    print(purchaseHistory) # TODO: Test Line
+    for i in range(int(amountTransactions)-1):
+        transaction = history.readline().strip().split(' ')
+        user, items = transaction[0], transaction[1]
+        purchaseHistory[int(user)-1][int(items)-1] = 1
+    print(purchaseHistory) # TODO: Test Line
+        
     
 
 # ----------------------------------------------------------------
@@ -29,8 +42,13 @@ def read_text():
 # ----------------------------------------------------------------
 def process_input(text):
     item_features = []
+    # purchaseHistory = np.zeros
+    # purchaseHistory.shape = (4, 4)
     for line in text:
-        print(line)
+        user, items = line.strip()
+        user, items = items.split(' ')
+
+        print(user + " " + items)
         # item_features.append(np.fromstring(line, dtype=float, sep=' '))
     return item_features
 
@@ -43,11 +61,19 @@ def write_text(text):
 
 
 # ----------------------------------------------------------------
+# Build the customer-item purchase history table
+# ----------------------------------------------------------------
+def build_purchase_history_table(item_features):
+    pass
+
+
+# ----------------------------------------------------------------
 # Execute the other functions for the core program.
 # ----------------------------------------------------------------
 def main():
-    item_features = read_text()
-    item_features = process_input(item_features)
+    # item_features = read_text()
+    # item_features = process_input(item_features)
+    tablePurchaseHistory()
 
 if __name__ == "__main__":
     main()
