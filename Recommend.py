@@ -44,7 +44,7 @@ def calculateAngle(x, y):
     norm_y = np.linalg.norm(y)
     cos_theta = np.dot(x, y) / (norm_x * norm_y)
     theta = math.degrees(math.acos(cos_theta))
-    print(theta) # TODO: Test Line
+    print(theta)                    # TODO: Test Line
     return theta
 
 
@@ -67,11 +67,15 @@ def main():
     # averageAngle = calculateAngle()
     # print(f"Average angle: {averageAngle}")
 
-    vectors = []
+    vectors, angles = [], []
     for column in range(int(amountItems)):
         vectors.append(createVectors(purchaseHistory, column))
-    print(f"Vectors: {vectors}")
-    calculateAngle(vectors[0], vectors[1])
+    # print(f"Vectors: {vectors}")  # TODO: Test Line
+    for vectorStart in vectors:
+        for vectorIterator in vectors:
+            angles.append(calculateAngle(vectors[vectorStart], vectors[vectorIterator + vectorStart]))
+    print(angles)                   # TODO: Test Line
+    
 
 if __name__ == "__main__":
     main()
