@@ -15,6 +15,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] Discover the formula that is required for the AVERAGE ANGLE
+- [ ] Implement the Average Angle function
 
 
 ## PR Ready
