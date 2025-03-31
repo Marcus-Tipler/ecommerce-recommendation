@@ -8,6 +8,7 @@
 # Importing necessary libraries
 import numpy as np
 from array import *
+import math
 
 
 # ----------------------------------------------------------------
@@ -38,18 +39,21 @@ def calculateAverageAngle():
 
     return 1                        # FIXME: REPLACE 1
 
-def calculateAngle(amountItems):
-
-    return 1                        # FIXME: REPLACE 1
+def calculateAngle(x, y):
+    norm_x = np.linalg.norm(x)
+    norm_y = np.linalg.norm(y)
+    cos_theta = np.dot(x, y) / (norm_x * norm_y)
+    theta = math.degrees(math.acos(cos_theta))
+    print(theta) # TODO: Test Line
+    return theta
 
 
 # ----------------------------------------------------------------
 # Creates vectors for each item in the matrix.
 # ----------------------------------------------------------------
-def createVectors(purchaseHistory, amountCustomers, amountItems, amountTransactions):
-    columnOne = purchaseHistory[:,2]
-    print(columnOne)                # TODO: Test Line
-    return 1                        # FIXME: REPLACE 1
+def createVectors(purchaseHistory, column):
+    columnOne = purchaseHistory[:,column]
+    return columnOne
 
 
 # ----------------------------------------------------------------
@@ -58,10 +62,16 @@ def createVectors(purchaseHistory, amountCustomers, amountItems, amountTransacti
 def main():
     amountCustomers, amountItems, amountTransactions, countPositiveEntries, purchaseHistory = tablePurchaseHistory()
     print(f"Positive entries: {countPositiveEntries}")
-    vectors = createVectors(purchaseHistory, amountCustomers, amountItems, amountTransactions)
+    # vectors = createVectors(purchaseHistory, 1)
+    # print(f"Vectors: {vectors}")
+    # averageAngle = calculateAngle()
+    # print(f"Average angle: {averageAngle}")
+
+    vectors = []
+    for column in range(int(amountItems)):
+        vectors.append(createVectors(purchaseHistory, column))
     print(f"Vectors: {vectors}")
-    averageAngle = calculateAngle(amountItems)
-    print(f"Average angle: {averageAngle}")
+    calculateAngle(vectors[0], vectors[1])
 
 if __name__ == "__main__":
     main()
