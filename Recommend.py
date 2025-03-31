@@ -28,22 +28,39 @@ def tablePurchaseHistory():
         purchaseHistory[int(user)-1][int(items)-1] = 1
     # print(purchaseHistory)        # TODO: Test Line
     # print(countEntries)           # TODO: Test Line
-    return countEntries
+    return amountCustomers, amountItems, amountTransactions, countEntries, purchaseHistory
 
 
+# ----------------------------------------------------------------
+# Creates vectors for each item and pre-computes angle definitions.
+# ----------------------------------------------------------------
 def calculateAverageAngle():
-    return 1
+
+    return 1                        # FIXME: REPLACE 1
+
+def calculateAngle(amountItems):
+
+    return 1                        # FIXME: REPLACE 1
+
+
+# ----------------------------------------------------------------
+# Creates vectors for each item in the matrix.
+# ----------------------------------------------------------------
+def createVectors(purchaseHistory, amountCustomers, amountItems, amountTransactions):
+    columnOne = purchaseHistory[:,2]
+    print(columnOne)                # TODO: Test Line
+    return 1                        # FIXME: REPLACE 1
 
 
 # ----------------------------------------------------------------
 # Execute the other functions for the core program.
 # ----------------------------------------------------------------
 def main():
-    # item_features = read_text()
-    # item_features = process_input(item_features)
-    countPositiveEntries = tablePurchaseHistory()
+    amountCustomers, amountItems, amountTransactions, countPositiveEntries, purchaseHistory = tablePurchaseHistory()
     print(f"Positive entries: {countPositiveEntries}")
-    averageAngle = calculateAverageAngle()
+    vectors = createVectors(purchaseHistory, amountCustomers, amountItems, amountTransactions)
+    print(f"Vectors: {vectors}")
+    averageAngle = calculateAngle(amountItems)
     print(f"Average angle: {averageAngle}")
 
 if __name__ == "__main__":
