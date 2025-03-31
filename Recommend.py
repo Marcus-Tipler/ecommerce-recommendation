@@ -24,16 +24,19 @@ from array import *
 def tablePurchaseHistory():
     history = open('history.txt', 'r')
     dataSummary = history.readline().strip().split()
-    amountCustomers = dataSummary[0]
-    amountItems = dataSummary[1]
-    amountTransactions = dataSummary[2]
+    amountCustomers, amountItems, amountTransactions = dataSummary[0], dataSummary[1], dataSummary[2]
+    countEntries = 0
     purchaseHistory = np.zeros((int(amountCustomers), int(amountItems)))
-    print(purchaseHistory) # TODO: Test Line
-    for i in range(int(amountTransactions)-1):
+    # print(purchaseHistory)        # TODO: Test Line
+    for i in range(int(amountTransactions)):
         transaction = history.readline().strip().split(' ')
         user, items = transaction[0], transaction[1]
+        if (purchaseHistory[int(user)-1][int(items)-1] == 0):
+            countEntries += 1
         purchaseHistory[int(user)-1][int(items)-1] = 1
-    print(purchaseHistory) # TODO: Test Line
+    # print(purchaseHistory)        # TODO: Test Line
+    # print(countEntries)           # TODO: Test Line
+    return countEntries
         
     
 
