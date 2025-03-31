@@ -37,37 +37,10 @@ def tablePurchaseHistory():
     # print(purchaseHistory)        # TODO: Test Line
     # print(countEntries)           # TODO: Test Line
     return countEntries
-        
-    
-
-# ----------------------------------------------------------------
-# Process the input in to lists of vectors
-# ----------------------------------------------------------------
-def process_input(text):
-    item_features = []
-    # purchaseHistory = np.zeros
-    # purchaseHistory.shape = (4, 4)
-    for line in text:
-        user, items = line.strip()
-        user, items = items.split(' ')
-
-        print(user + " " + items)
-        # item_features.append(np.fromstring(line, dtype=float, sep=' '))
-    return item_features
 
 
-# ----------------------------------------------------------------
-# Write the output to the command line interface.
-# ----------------------------------------------------------------
-def write_text(text):
-    print(text)
-
-
-# ----------------------------------------------------------------
-# Build the customer-item purchase history table
-# ----------------------------------------------------------------
-def build_purchase_history_table(item_features):
-    pass
+def calculateAverageAngle():
+    return 1
 
 
 # ----------------------------------------------------------------
@@ -76,7 +49,10 @@ def build_purchase_history_table(item_features):
 def main():
     # item_features = read_text()
     # item_features = process_input(item_features)
-    tablePurchaseHistory()
+    countPositiveEntries = tablePurchaseHistory()
+    print(f"Positive entries: {countPositiveEntries}")
+    averageAngle = calculateAverageAngle()
+    print(f"Average angle: {averageAngle}")
 
 if __name__ == "__main__":
     main()
