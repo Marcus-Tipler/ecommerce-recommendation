@@ -71,16 +71,18 @@ def createVectorAverages(purchaseHistory, amountItems):
 def createVectorAngles(amountItems, vectors):
     angles = []
     anglesDimension = [[90]*int(amountItems)]*int(amountItems)
+    anglesMap = np.array(anglesDimension)
     for vectorStart in range(int(amountItems)):
         for vectorIterator in range(vectorStart + 1, int(amountItems)):
-            anglesDimension[vectorStart][vectorIterator] = calculateAngle(vectors[vectorStart], vectors[vectorIterator])
+            anglesMap[vectorStart][vectorIterator] = calculateAngle(vectors[vectorStart], vectors[vectorIterator])
             # anglesDimension[vectorStart].replace(vectorIterator,12)
-            angles.append(anglesDimension[vectorStart][vectorIterator])
-            print(f"{anglesDimension[vectorStart][vectorIterator]} ", end="")
-        averageAngles = mean(angles)
+            angles.append(anglesMap[vectorStart][vectorIterator])
+            print(f"{anglesMap[vectorStart][vectorIterator]} ", end="")
         print()
+    averageAngles = mean(angles)
+        
     # print(anglesDimension)
-    return angles, averageAngles, anglesDimension
+    return angles, averageAngles, anglesMap
 
 
 def performQuery(angles):
@@ -100,7 +102,7 @@ def performQuery(angles):
         print(f"Item: {element};", end="") # FIXME: needs replacement number for loop after test.
         angleComparator = 90
         angleNumber, angleSaved = 0, 0
-        for angle in angles[:][int(element)]:
+        for angle in angles[int(element) - 1][:]:
             angleNumber = angleNumber + 1
             if int(angle) < angleComparator: 
                 angleComparator = angle
