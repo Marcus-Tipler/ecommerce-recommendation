@@ -87,29 +87,34 @@ def createVectorAngles(amountItems, vectors):
 
 def performQuery(angles):
     queries = open(pathQueries, 'r')
-    queryLine = queries.readline().strip()
-    queryNumbers = []
-    for element in queryLine:
-        queryNumbers.append(element)
-        # print(angles[int(element)])   # TODO: Test Line
-    # print(queryNumbers)               # TODO: Test Line
+    while True:
+        if queries == '':
+            break
+        queryLine = queries.readline().strip()
+        queryNumbers = []
+        for element in queryLine:
+            if element != ' ':
+                queryNumbers.append(element)
+            # print(angles[int(element)])   # TODO: Test Line
+        # print(queryNumbers)               # TODO: Test Line
 
-    print(f"Shopping cart:", end="")
-    for element in queryNumbers: print(f" {element}", end="")
-    print()
+        print(f"Shopping cart:", end="")
+        for element in queryNumbers: print(f" {element}", end="")
+        print()
 
-    for element in queryNumbers:
-        print(f"Item: {element};", end="") # FIXME: needs replacement number for loop after test.
-        angleComparator = 90
-        angleNumber, angleSaved = 0, 0
-        for angle in angles[int(element) - 1][:]:
-            angleNumber = angleNumber + 1
-            if int(angle) < angleComparator: 
-                angleComparator = angle
-                angleSaved = angleNumber
-        if angleSaved < 90:
-            print(f" match: {angleSaved}; angle: {angleComparator}")
-                # print(f"SUCCESS IN FUNCTION = {angleSaved} + {angleComparator}")
+        for element in queryNumbers:
+            print(f"Item: {element}", end="")
+            angleComparator = 90
+            angleNumber, angleSaved = 0, 0
+            visibleArray = angles[:, int(element) - 1]
+            for angle in visibleArray:
+                angleNumber = angleNumber + 1
+                if int(angle) < angleComparator: 
+                    angleComparator = angle
+                    angleSaved = angleNumber
+            if angleComparator < 90:
+                print(f"; match: {angleSaved}; angle: {angleComparator}")
+            else: print(f" no match")
 
 
 
