@@ -88,9 +88,9 @@ def createVectorAngles(amountItems, vectors):
 def performQuery(angles):
     queries = open(pathQueries, 'r')
     while True:
-        if queries == '':
-            break
         queryLine = queries.readline().strip()
+        if queryLine == '':
+            break
         queryNumbers = []
         for element in queryLine:
             if element != ' ':
@@ -106,12 +106,13 @@ def performQuery(angles):
             print(f"Item: {element}", end="")
             angleComparator = 90
             angleNumber, angleSaved = 0, 0
-            visibleArray = angles[:, int(element) - 1]
+            visibleArray = angles[int(element) - 1, :]
             for angle in visibleArray:
                 angleNumber = angleNumber + 1
                 if int(angle) < angleComparator: 
-                    angleComparator = angle
-                    angleSaved = angleNumber
+                    if str(angleNumber) not in queryNumbers:
+                        angleComparator = angle
+                        angleSaved = angleNumber
             if angleComparator < 90:
                 print(f"; match: {angleSaved}; angle: {angleComparator}")
             else: print(f" no match")
