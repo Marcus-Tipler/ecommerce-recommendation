@@ -70,12 +70,17 @@ def createVectorAverages(purchaseHistory, amountItems):
 # ----------------------------------------------------------------  
 def createVectorAngles(amountItems, vectors):
     angles = []
-    anglesDimension = [[], []]
+    anglesDimension = [[90]*int(amountItems)]*int(amountItems)
     for vectorStart in range(int(amountItems)):
         for vectorIterator in range(vectorStart + 1, int(amountItems)):
-            angles.append(calculateAngle(vectors[vectorStart], vectors[vectorIterator]))
-        averageAngles = mean(angles) 
-    return angles, averageAngles
+            anglesDimension[vectorStart][vectorIterator] = calculateAngle(vectors[vectorStart], vectors[vectorIterator])
+            # anglesDimension[vectorStart].replace(vectorIterator,12)
+            angles.append(anglesDimension[vectorStart][vectorIterator])
+            print(f"{anglesDimension[vectorStart][vectorIterator]} ", end="")
+        averageAngles = mean(angles)
+        print()
+    # print(anglesDimension)
+    return angles, averageAngles, anglesDimension
 
 
 def performQuery(angles):
@@ -91,18 +96,20 @@ def performQuery(angles):
     for element in queryNumbers: print(f" {element}", end="")
     print()
 
-    print(f"Item {queryNumbers[0]}", end="") # FIXME: needs replacement number for loop after test.
-    angleComparator = 90
-    angleNumber, angleSaved = 0, 0
-    for angle in angles:
-        angleNumber = angleNumber + 1
-        if int(angle) < angleComparator: 
-            angleComparator = angle
-            angleSaved = angleNumber
-            print(f"SUCCESS IN FUNCTION = {angleSaved} + {angleComparator}")
-        
+    for element in queryNumbers:
+        print(f"Item: {element};", end="") # FIXME: needs replacement number for loop after test.
+        angleComparator = 90
+        angleNumber, angleSaved = 0, 0
+        for angle in angles[:][int(element)]:
+            angleNumber = angleNumber + 1
+            if int(angle) < angleComparator: 
+                angleComparator = angle
+                angleSaved = angleNumber
+        if angleSaved < 90:
+            print(f" match: {angleSaved}; angle: {angleComparator}")
+                # print(f"SUCCESS IN FUNCTION = {angleSaved} + {angleComparator}")
 
-        else: print(f" {angle}")
+
 
 
 
@@ -117,13 +124,13 @@ def main():
     vectors = createVectorAverages(purchaseHistory, amountItems)
     # print(f"Vectors: {vectors}")    # TODO: Test Line
 
-    angles, averageAngles = createVectorAngles(amountItems, vectors)
+    angles, averageAngles, anglesDimension = createVectorAngles(amountItems, vectors)
     print(f"Average angle: {averageAngles}")
     # print(list_avg)                 # TODO: Test Line
     # print(angles)                   # TODO: Test Line
 
     # Perform the loop.
-    performQuery(angles)
+    performQuery(anglesDimension)
 
 
 if __name__ == "__main__":
