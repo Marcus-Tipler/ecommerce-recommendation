@@ -70,15 +70,16 @@ def createVectorAverages(purchaseHistory, amountItems):
 # ----------------------------------------------------------------  
 def createVectorAngles(amountItems, vectors):
     angles = []
-    anglesDimension = [[90]*int(amountItems)]*int(amountItems)
+    anglesDimension = [[90.00]*int(amountItems)]*int(amountItems)
     anglesMap = np.array(anglesDimension)
     for vectorStart in range(int(amountItems)):
         for vectorIterator in range(vectorStart + 1, int(amountItems)):
             anglesMap[vectorStart][vectorIterator] = calculateAngle(vectors[vectorStart], vectors[vectorIterator])
+            anglesMap[vectorIterator][vectorStart] = anglesMap[vectorStart][vectorIterator]
             # anglesDimension[vectorStart].replace(vectorIterator,12)
             angles.append(anglesMap[vectorStart][vectorIterator])
-            print(f"{anglesMap[vectorStart][vectorIterator]} ", end="")
-        print()
+            # print(f"{anglesMap[vectorStart][vectorIterator]} ", end="")
+        # print()
     averageAngles = mean(angles)
         
     # print(anglesDimension)
@@ -88,8 +89,8 @@ def createVectorAngles(amountItems, vectors):
 def performQuery(angles):
     queries = open(pathQueries, 'r')
     while True:
-        queryLine = queries.readline().strip()
-        if queryLine == '':
+        queryLine = queries.readline().strip().split()
+        if queryLine == []:
             break
         queryNumbers = []
         for element in queryLine:
@@ -102,6 +103,7 @@ def performQuery(angles):
         for element in queryNumbers: print(f" {element}", end="")
         print()
 
+        recommend = []
         for element in queryNumbers:
             print(f"Item: {element}", end="")
             angleComparator = 90
@@ -109,17 +111,18 @@ def performQuery(angles):
             visibleArray = angles[int(element) - 1, :]
             for angle in visibleArray:
                 angleNumber = angleNumber + 1
-                if int(angle) < angleComparator: 
+                if float(angle) < angleComparator: 
                     if str(angleNumber) not in queryNumbers:
                         angleComparator = angle
                         angleSaved = angleNumber
             if angleComparator < 90:
-                print(f"; match: {angleSaved}; angle: {angleComparator}")
+                print(f"; match: {angleSaved}; angle: {"{:.2f}".format(angleComparator, 2)}")
+                recommend.append(angleSaved)
             else: print(f" no match")
-
-
-
-
+        print("Recommend:", end="")
+        for element in recommend:
+            print(f" {element}", end="")
+        print()
 
 
 # ----------------------------------------------------------------
@@ -133,7 +136,7 @@ def main():
     # print(f"Vectors: {vectors}")    # TODO: Test Line
 
     angles, averageAngles, anglesDimension = createVectorAngles(amountItems, vectors)
-    print(f"Average angle: {averageAngles}")
+    print(f"Average angle: {"{:.2f}".format(averageAngles, 2)}")
     # print(list_avg)                 # TODO: Test Line
     # print(angles)                   # TODO: Test Line
 
