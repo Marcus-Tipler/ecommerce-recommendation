@@ -10,7 +10,7 @@ import numpy as np
 from array import *
 import math
 import os
-from statistics import mean 
+from statistics import mean
 
 # Sets the realtime path 
 path = os.path.dirname(os.path.realpath(__file__))
@@ -100,10 +100,11 @@ def performQuery(angles):
         # print(queryNumbers)               # TODO: Test Line
 
         print(f"Shopping cart:", end="")
-        for element in queryNumbers: print(f" {element}", end="")
+        for element in queryNumbers: 
+            print(f" {element}", end="")
         print()
 
-        recommend = []
+        recommend = {}
         for element in queryNumbers:
             print(f"Item: {element}", end="")
             angleComparator = 90
@@ -117,11 +118,13 @@ def performQuery(angles):
                         angleSaved = angleNumber
             if angleComparator < 90:
                 print(f"; match: {angleSaved}; angle: {"{:.2f}".format(angleComparator, 2)}")
-                recommend.append(angleSaved)
+                # recommend.append({angleSaved, angleComparator})
+                recommend["{:.2f}".format(angleComparator)] = angleSaved
             else: print(f" no match")
         print("Recommend:", end="")
-        for element in recommend:
-            print(f" {element}", end="")
+        recommend = sorted(recommend.items())
+        for x, y in recommend:
+            print(f" {y}", end="")
         print()
 
 
