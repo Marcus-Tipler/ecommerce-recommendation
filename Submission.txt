@@ -1,0 +1,8 @@
+Hello Dr Yukun Lai,
+
+Please find all extra information you may require on my GitHub:
+https://github.com/Marcus-Tipler/ecommerce-recommendation
+
+Synthetic Data is created for runtime testing purposes
+using the Synthetic Data Creation python files in the repository.
+Their "How To's" are located in their code.
