@@ -5,6 +5,10 @@
 # ----------------------------------------------------------------
 
 
+# ----------------------------------------------------------------
+# Pre-defined requirements and or configurations
+# ----------------------------------------------------------------
+
 # Importing necessary libraries
 import numpy as np
 from array import *
@@ -39,6 +43,9 @@ def tablePurchaseHistory():
     return amountCustomers, amountItems, amountTransactions, countEntries, purchaseHistory
 
 
+# ----------------------------------------------------------------
+# Calculate the angle based on the week 4 lectures.
+# ----------------------------------------------------------------
 def calculateAngle(x, y):
     norm_x = np.linalg.norm(x)
     norm_y = np.linalg.norm(y)
@@ -58,6 +65,9 @@ def createVectors(purchaseHistory, column):
     return columnOne
 
 
+# ----------------------------------------------------------------
+# Creates individual vectors (function can be iterated and reused).
+# ----------------------------------------------------------------
 def createVectorAverages(purchaseHistory, amountItems):
     vectors = []
     for column in range(int(amountItems)):
@@ -78,14 +88,15 @@ def createVectorAngles(amountItems, vectors):
             anglesMap[vectorIterator][vectorStart] = anglesMap[vectorStart][vectorIterator]
             # anglesDimension[vectorStart].replace(vectorIterator,12)
             angles.append(anglesMap[vectorStart][vectorIterator])
-            # print(f"{anglesMap[vectorStart][vectorIterator]} ", end="")
-        # print()
+            # print(f"{anglesMap[vectorStart][vectorIterator]} ", end="") # TODO: Test Line
     averageAngles = mean(angles)
-        
-    # print(anglesDimension)
     return angles, averageAngles, anglesMap
 
 
+# ----------------------------------------------------------------
+# Performs loop that reads queries from file, prints shopping lines
+# and performs the recommendations based on the angles.
+# ----------------------------------------------------------------
 def performQuery(angles):
     queries = open(pathQueries, 'r')
     while True:
@@ -121,6 +132,7 @@ def performQuery(angles):
                 # recommend.append({angleSaved, angleComparator})
                 recommend["{:.2f}".format(angleComparator)] = angleSaved
             else: print(f" no match")
+
         print("Recommend:", end="")
         recommend = sorted(recommend.items())
         for x, y in recommend:
@@ -132,12 +144,25 @@ def performQuery(angles):
 # Execute the other functions for the core program.
 # ----------------------------------------------------------------
 def main():
+    # ----------------------------------------------------------------
+    # TASKS IN THE PROGRAM
+    # 1. Read the purchase history from the history file.
+    # 2. Calculate the angle based on the week 4 lectures.
+    # 3. Create vectors for each item in the matrix.
+    # 4. Create a matrix for each calculated average.
+    # 7. Performs loop that reads queries from file, prints shopping lines,
+    #    and performs the recommendations based on the angles.
+    # ----------------------------------------------------------------
+    
+    # Read the purchase history from the history file.
     amountCustomers, amountItems, amountTransactions, countPositiveEntries, purchaseHistory = tablePurchaseHistory()
     print(f"Positive entries: {countPositiveEntries}")
 
+    # Calculate the angle based on the week 4 lectures.
     vectors = createVectorAverages(purchaseHistory, amountItems)
     # print(f"Vectors: {vectors}")    # TODO: Test Line
 
+    # Create vectors for each item in the matrix.
     angles, averageAngles, anglesDimension = createVectorAngles(amountItems, vectors)
     print(f"Average angle: {"{:.2f}".format(averageAngles, 2)}")
     # print(list_avg)                 # TODO: Test Line
